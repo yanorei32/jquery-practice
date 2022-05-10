@@ -26,7 +26,33 @@ struct {
 
 static jQueryState state;
 
+/* 0: successful, 1: failed */
+inline int col2seq(char *sequence, char *color) {
+	if (!strcmp(color, "black"))
+		strcpy(sequence, "0m");
+	else if (!strcmp(color, "red"))
+		strcpy(sequence, "1m");
+	else if (!strcmp(color, "green"))
+		strcpy(sequence, "2m");
+	else if (!strcmp(color, "yellow"))
+		strcpy(sequence, "3m");
+	else if (!strcmp(color, "blue"))
+		strcpy(sequence, "4m");
+	else if (!strcmp(color, "magenta"))
+		strcpy(sequence, "5m");
+	else if (!strcmp(color, "cyan"))
+		strcpy(sequence, "6m");
+	else if (!strcmp(color, "white"))
+		strcpy(sequence, "7m");
+	else
+		return 1;
+
+	return 0;
+}
+
 void appendTo(char*) {
+	char seq[32] = {0};
+
 	if (!strcmp(state.tag, "<h1>"))
 		printf("\e[1m");
 
@@ -39,39 +65,11 @@ void appendTo(char*) {
 	if (state.style.strike)
 		printf("\e[9m");
 
-	if (!strcmp(state.bgcolor, "black"))
-		printf("\e[40m");
-	else if (!strcmp(state.bgcolor, "red"))
-		printf("\e[41m");
-	else if (!strcmp(state.bgcolor, "green"))
-		printf("\e[42m");
-	else if (!strcmp(state.bgcolor, "yellow"))
-		printf("\e[43m");
-	else if (!strcmp(state.bgcolor, "blue"))
-		printf("\e[44m");
-	else if (!strcmp(state.bgcolor, "magenta"))
-		printf("\e[45m");
-	else if (!strcmp(state.bgcolor, "cyan"))
-		printf("\e[46m");
-	else if (!strcmp(state.bgcolor, "white"))
-		printf("\e[47m");
+	if(!col2seq(seq, state.color))
+		printf("\e[3%s", seq);
 
-	if (!strcmp(state.color, "black"))
-		printf("\e[30m");
-	else if (!strcmp(state.color, "red"))
-		printf("\e[31m");
-	else if (!strcmp(state.color, "green"))
-		printf("\e[32m");
-	else if (!strcmp(state.color, "yellow"))
-		printf("\e[33m");
-	else if (!strcmp(state.color, "blue"))
-		printf("\e[34m");
-	else if (!strcmp(state.color, "magenta"))
-		printf("\e[35m");
-	else if (!strcmp(state.color, "cyan"))
-		printf("\e[36m");
-	else if (!strcmp(state.color, "white"))
-		printf("\e[37m");
+	if(!col2seq(seq, state.bgcolor))
+		printf("\e[4%s", seq);
 
 	printf("%s\e[0m\n", state.text);
 	fflush(stdout);
