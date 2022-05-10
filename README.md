@@ -25,6 +25,4 @@ $(
   (json){ text: "Strike + Underline" }
 ).css("text-decoration", "line-through underline")
  .appendTo("body");
-
-render(); /* flush buffer to console */
 ```
