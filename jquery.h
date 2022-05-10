@@ -49,7 +49,7 @@ void appendTo(char*) {
 		strcat(HTML, "\e[44m");
 	if (!strcmp(state.bgcolor, "magenta"))
 		strcat(HTML, "\e[45m");
-	if (!strcmp(state.bgcolor, "sean"))
+	if (!strcmp(state.bgcolor, "cyan"))
 		strcat(HTML, "\e[46m");
 	if (!strcmp(state.bgcolor, "white"))
 		strcat(HTML, "\e[47m");
@@ -66,7 +66,7 @@ void appendTo(char*) {
 		strcat(HTML, "\e[34m");
 	if (!strcmp(state.color, "magenta"))
 		strcat(HTML, "\e[35m");
-	if (!strcmp(state.color, "sean"))
+	if (!strcmp(state.color, "cyan"))
 		strcat(HTML, "\e[36m");
 	if (!strcmp(state.color, "white"))
 		strcat(HTML, "\e[37m");
