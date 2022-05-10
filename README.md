@@ -32,4 +32,11 @@ $(
 ).css("background-color", "#e34234")
  .css("color", "#ee6")
  .appendTo("body");
+
+$(
+  "<p>",
+  (json){ text: "Hex Color (opacity-emulation)" }
+).css("background-color", "#e3423511")
+ .css("color", "#ee61")
+ .appendTo("body");
 ```

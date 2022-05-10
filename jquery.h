@@ -3,6 +3,12 @@
 #define BIG_STRING   16384
 #define SHORT_STRING    16
 
+#ifndef TERMINAL_COLOR
+#define TERMINAL_COLOR 0x00, 0x00, 0x00
+#endif
+
+static const unsigned char base_color[] = { TERMINAL_COLOR };
+
 struct jQueryRet {
 	void (*appendTo)(char*);
 	struct jQueryRet (*css)(char*, char*);
@@ -41,7 +47,7 @@ unsigned char get2digit(char *s) {
 
 /* 0: successful, 1: failed */
 int col2seq(char *seq, char *col) {
-	unsigned char r, g, b;
+	unsigned char r, g, b, a = 255;
 
 	if (!strcmp(col, "black"))
 		strcpy(seq, "0");
@@ -61,11 +67,17 @@ int col2seq(char *seq, char *col) {
 		strcpy(seq, "7");
 	else if (col[0] == '#') {
 		switch(strlen(++col)) {
+			case 4:
+				a = expandhex(col[3]);
+
 			case 3:
 				r = expandhex(col[0]),
 				g = expandhex(col[1]),
 				b = expandhex(col[2]);
 				break;
+
+			case 8:
+				a = get2digit(col+6);
 
 			case 6:
 				r = get2digit(col),
@@ -75,6 +87,13 @@ int col2seq(char *seq, char *col) {
 
 			default:
 				return 1;
+		}
+
+		if (a != 255) {
+			float fg = (float)a / 255;
+			r = base_color[0] * (1-fg) + r * fg;
+			g = base_color[1] * (1-fg) + g * fg;
+			b = base_color[2] * (1-fg) + b * fg;
 		}
 
 		sprintf(seq, "8;2;%d;%d;%d", r, g, b);
