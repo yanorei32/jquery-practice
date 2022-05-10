@@ -24,12 +24,11 @@ struct {
 jQueryReq typedef json;
 
 struct {
-	char tag[SHORT_STRING];
 	char text[LONG_STRING];
 	char color[SHORT_STRING];
 	char bgcolor[SHORT_STRING];
 	struct {
-		unsigned int underline : 1, italic : 1, strike : 1;
+		unsigned int underline : 1, italic : 1, strike : 1, bold : 1, newline: 1;
 	} style;
 } typedef jQueryState;
 
@@ -108,9 +107,6 @@ int col2seq(char *seq, char *col) {
 void appendTo(char*) {
 	char seq[32] = {0};
 
-	if (!strcmp(state.tag, "<h1>"))
-		printf("\e[1m");
-
 	if (state.style.italic)
 		printf("\e[3m");
 
@@ -126,7 +122,7 @@ void appendTo(char*) {
 	if(!col2seq(seq, state.bgcolor))
 		printf("\e[4%sm", seq);
 
-	printf("%s\e[0m\n", state.text);
+	printf("%s\e[0m%c", state.text, state.style.newline * '\n');
 	fflush(stdout);
 }
 
@@ -149,8 +145,11 @@ jQueryRet css(char* property, char* value) {
 }
 
 jQueryRet $(char* tag, jQueryReq v) {
-	state = (jQueryState) { "", "", "", "", { 0, 0, 0 } };
-	strcpy(state.tag, tag);
+	state = (jQueryState) { "", "", "", { 0, 0, 0, 0, 1 } };
+
+	state.style.bold = !strcmp(tag, "<h1>");
+	state.style.newline = !!strcmp(tag, "<span>");
+
 	strcpy(state.text, v.text);
 	return (jQueryRet) { appendTo, css };
 }
