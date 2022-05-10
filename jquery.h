@@ -36,7 +36,9 @@ struct {
 static jQueryState state;
 
 unsigned char hex2int(char c) {
-	return '0' <= c && c <= '9' ? c - '0' : c - 'a' + 10;
+	return '0' <= c && c <= '9' ? c - '0' :
+		'A' <= c && c <= 'F' ? c - 'A' + 10 :
+		'a' <= c && c <= 'f' ? c - 'a' + 10 : 0;
 }
 
 unsigned char expandhex(char c) {
@@ -72,7 +74,6 @@ int col2seq(char *seq, char *col) {
 		switch(strlen(++col)) {
 			case 4:
 				a = expandhex(col[3]);
-
 			case 3:
 				r = expandhex(col[0]),
 				g = expandhex(col[1]),
@@ -81,7 +82,6 @@ int col2seq(char *seq, char *col) {
 
 			case 8:
 				a = get2digit(col+6);
-
 			case 6:
 				r = get2digit(col),
 				g = get2digit(col+2),
