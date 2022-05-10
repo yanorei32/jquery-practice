@@ -40,44 +40,44 @@ unsigned char get2digit(char *s) {
 }
 
 /* 0: successful, 1: failed */
-int col2seq(char *sequence, char *color) {
+int col2seq(char *seq, char *col) {
 	unsigned char r, g, b;
 
-	if (!strcmp(color, "black"))
-		strcpy(sequence, "0");
-	else if (!strcmp(color, "red"))
-		strcpy(sequence, "1");
-	else if (!strcmp(color, "green"))
-		strcpy(sequence, "2");
-	else if (!strcmp(color, "yellow"))
-		strcpy(sequence, "3");
-	else if (!strcmp(color, "blue"))
-		strcpy(sequence, "4");
-	else if (!strcmp(color, "magenta"))
-		strcpy(sequence, "5");
-	else if (!strcmp(color, "cyan"))
-		strcpy(sequence, "6");
-	else if (!strcmp(color, "white"))
-		strcpy(sequence, "7");
-	else if (color[0] == '#') {
-		switch(strlen(++color)) {
+	if (!strcmp(col, "black"))
+		strcpy(seq, "0");
+	else if (!strcmp(col, "red"))
+		strcpy(seq, "1");
+	else if (!strcmp(col, "green"))
+		strcpy(seq, "2");
+	else if (!strcmp(col, "yellow"))
+		strcpy(seq, "3");
+	else if (!strcmp(col, "blue"))
+		strcpy(seq, "4");
+	else if (!strcmp(col, "magenta"))
+		strcpy(seq, "5");
+	else if (!strcmp(col, "cyan"))
+		strcpy(seq, "6");
+	else if (!strcmp(col, "white"))
+		strcpy(seq, "7");
+	else if (col[0] == '#') {
+		switch(strlen(++col)) {
 			case 3:
-				r = expandhex(color[0]),
-				g = expandhex(color[1]),
-				b = expandhex(color[2]);
+				r = expandhex(col[0]),
+				g = expandhex(col[1]),
+				b = expandhex(col[2]);
 				break;
 
 			case 6:
-				r = get2digit(color),
-				g = get2digit(color+2),
-				b = get2digit(color+4);
+				r = get2digit(col),
+				g = get2digit(col+2),
+				b = get2digit(col+4);
 				break;
 
 			default:
 				return 1;
 		}
 
-		sprintf(sequence, "8;2;%d;%d;%d", r, g, b);
+		sprintf(seq, "8;2;%d;%d;%d", r, g, b);
 	} else return 1;
 
 	return 0;
