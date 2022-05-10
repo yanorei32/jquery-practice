@@ -7,6 +7,15 @@ jQuery like ANSI terminal formatter.
 
 <img src=https://user-images.githubusercontent.com/11992915/167632311-ca44ace6-95f5-4e87-b189-c22848901ed5.png width=640px>
 
+## quick start
+
+```bash
+git clone https://github.com/yanorei32/jquery-practice
+cd jquery-practice
+gcc main.c
+./a.out
+```
+
 ## example
 
 ```c
