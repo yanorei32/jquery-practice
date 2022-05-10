@@ -1,6 +1,9 @@
+#ifndef JQUERY_H
+#define JQUERY_H
+
 #include <stdio.h>
 #include <string.h>
-#define BIG_STRING   16384
+#define LONG_STRING  16384
 #define SHORT_STRING    16
 
 #ifndef TERMINAL_COLOR
@@ -22,7 +25,7 @@ jQueryReq typedef json;
 
 struct {
 	char tag[SHORT_STRING];
-	char text[BIG_STRING];
+	char text[LONG_STRING];
 	char color[SHORT_STRING];
 	char bgcolor[SHORT_STRING];
 	struct {
@@ -151,3 +154,5 @@ jQueryRet $(char* tag, jQueryReq v) {
 	strcpy(state.text, v.text);
 	return (jQueryRet) { appendTo, css };
 }
+
+#endif
