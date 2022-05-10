@@ -1,3 +1,15 @@
+/*\
+| | jQuery like ANSI terminal format library
+| |   https://github.com/yanorei32/jquery-practice
+| |
+| | It's joke. The software provided "AS IS",
+| |   without warranty of any kind.
+| |
+| | Author:  yanorei32
+| | Date:    2022-05-10
+| | LICENSE: The Unlicense
+\*/
+
 #ifndef JQUERY_H
 #define JQUERY_H
 
