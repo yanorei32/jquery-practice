@@ -20,4 +20,11 @@ signed main() {
 		(json){ text: "Strike + Underline" }
 	).css("text-decoration", "line-through underline")
 	 .appendTo("body");
+
+	$(
+		"<p>",
+		(json){ text: "Hex Color" }
+	).css("background-color", "#e34234")
+	 .css("color", "#ee6")
+	 .appendTo("body");
 }

@@ -26,26 +26,59 @@ struct {
 
 static jQueryState state;
 
+unsigned char hex2int(char c) {
+	return '0' <= c && c <= '9' ? c - '0' : c - 'a' + 10;
+}
+
+unsigned char expandhex(char c) {
+	unsigned char v = hex2int(c);
+	return v * 16 + v;
+}
+
+unsigned char get2digit(char *s) {
+	return hex2int(s[0]) * 16 + hex2int(s[1]);
+}
+
 /* 0: successful, 1: failed */
-inline int col2seq(char *sequence, char *color) {
+int col2seq(char *sequence, char *color) {
+	unsigned char r, g, b;
+
 	if (!strcmp(color, "black"))
-		strcpy(sequence, "0m");
+		strcpy(sequence, "0");
 	else if (!strcmp(color, "red"))
-		strcpy(sequence, "1m");
+		strcpy(sequence, "1");
 	else if (!strcmp(color, "green"))
-		strcpy(sequence, "2m");
+		strcpy(sequence, "2");
 	else if (!strcmp(color, "yellow"))
-		strcpy(sequence, "3m");
+		strcpy(sequence, "3");
 	else if (!strcmp(color, "blue"))
-		strcpy(sequence, "4m");
+		strcpy(sequence, "4");
 	else if (!strcmp(color, "magenta"))
-		strcpy(sequence, "5m");
+		strcpy(sequence, "5");
 	else if (!strcmp(color, "cyan"))
-		strcpy(sequence, "6m");
+		strcpy(sequence, "6");
 	else if (!strcmp(color, "white"))
-		strcpy(sequence, "7m");
-	else
-		return 1;
+		strcpy(sequence, "7");
+	else if (color[0] == '#') {
+		switch(strlen(++color)) {
+			case 3:
+				r = expandhex(color[0]),
+				g = expandhex(color[1]),
+				b = expandhex(color[2]);
+				break;
+
+			case 6:
+				r = get2digit(color),
+				g = get2digit(color+2),
+				b = get2digit(color+4);
+				break;
+
+			default:
+				return 1;
+		}
+
+		sprintf(sequence, "8;2;%d;%d;%d", r, g, b);
+	} else return 1;
 
 	return 0;
 }
@@ -66,10 +99,10 @@ void appendTo(char*) {
 		printf("\e[9m");
 
 	if(!col2seq(seq, state.color))
-		printf("\e[3%s", seq);
+		printf("\e[3%sm", seq);
 
 	if(!col2seq(seq, state.bgcolor))
-		printf("\e[4%s", seq);
+		printf("\e[4%sm", seq);
 
 	printf("%s\e[0m\n", state.text);
 	fflush(stdout);
