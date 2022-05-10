@@ -119,6 +119,9 @@ int col2seq(char *seq, char *col) {
 void appendTo(char*) {
 	char seq[32] = {0};
 
+	if (state.style.bold)
+		printf("\e[1m");
+
 	if (state.style.italic)
 		printf("\e[3m");
 
