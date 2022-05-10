@@ -40,7 +40,13 @@ struct {
 	char color[SHORT_STRING];
 	char bgcolor[SHORT_STRING];
 	struct {
-		unsigned int underline : 1, italic : 1, strike : 1, bold : 1, newline: 1;
+		unsigned int
+			underline : 1,
+			italic : 1,
+			strike : 1,
+			bold : 1,
+			newline: 1,
+			visibility: 1;
 	} style;
 } typedef jQueryState;
 
@@ -128,6 +134,9 @@ void appendTo(char*) {
 	if (state.style.underline)
 		printf("\e[4m");
 
+	if (!state.style.visibility)
+		printf("\e[8m");
+
 	if (state.style.strike)
 		printf("\e[9m");
 
@@ -151,6 +160,9 @@ jQueryRet css(char* property, char* value) {
 	else if (!strcmp(property, "font-style"))
 		state.style.italic = !strcmp(value, "italic");
 
+	else if (!strcmp(property, "visibility"))
+		state.style.visibility = !!strcmp(value, "hidden");
+
 	else if (!strcmp(property, "font-weight")) {
 		if (!strcmp(value, "normal")) state.style.bold = 0;
 		if (!strcmp(value, "bold")) state.style.bold = 1;
@@ -168,7 +180,7 @@ jQueryRet css(char* property, char* value) {
 }
 
 jQueryRet $(char* tag, jQueryReq v) {
-	state = (jQueryState) { "", "", "", { 0, 0, 0, 0, 1 } };
+	state = (jQueryState) { "", "", "", { 0, 0, 0, 0, 1, 1 } };
 
 	state.style.bold = !strcmp(tag, "<h1>");
 	state.style.newline = !!strcmp(tag, "<span>");
