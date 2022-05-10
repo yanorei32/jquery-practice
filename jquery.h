@@ -148,7 +148,15 @@ jQueryRet css(char* property, char* value) {
 	else if (!strcmp(property, "font-style"))
 		state.style.italic = !strcmp(value, "italic");
 
-	else if (!strcmp(property, "text-decoration")) {
+	else if (!strcmp(property, "font-weight")) {
+		if (!strcmp(value, "normal")) state.style.bold = 0;
+		if (!strcmp(value, "bold")) state.style.bold = 1;
+
+	} else if (!strcmp(property, "display")) {
+		if (!strcmp(value, "inline")) state.style.newline = 0;
+		if (!strcmp(value, "block")) state.style.newline = 1;
+
+	} else if (!strcmp(property, "text-decoration")) {
 		state.style.strike = !!strstr(value, "line-through");
 		state.style.underline = !!strstr(value, "underline");
 	}
