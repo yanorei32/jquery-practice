@@ -57,4 +57,14 @@ $(
 ).css("background-color", "#e3423511")
  .css("color", "#ee61")
  .appendTo("body");
+
+
+$(
+  "<span>",
+  (json){ text: "Without \\n" }
+).css("background-color", "#fff")
+ .css("color", "#000")
+ .appendTo("body");
+
+puts();
 ```
