@@ -81,16 +81,16 @@ jQueryRet css(char* property, char* value) {
 	if (!strcmp(property, "background-color"))
 		strcpy(state.bgcolor, value);
 	
-	if (!strcmp(property, "color"))
+	else if (!strcmp(property, "color"))
 		strcpy(state.color, value);
 
-	if (!strcmp(property, "text-decoration")) {
+	else if (!strcmp(property, "font-style"))
+		state.style.italic = !strcmp(value, "italic");
+
+	else if (!strcmp(property, "text-decoration")) {
 		state.style.strike = !!strstr(value, "line-through");
 		state.style.underline = !!strstr(value, "underline");
 	}
-
-	if (!strcmp(property, "font-style"))
-		state.style.italic = !strcmp(value, "italic");
 
 	return (jQueryRet) { appendTo, css };
 }
