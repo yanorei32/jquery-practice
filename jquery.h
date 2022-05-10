@@ -41,40 +41,40 @@ void appendTo(char*) {
 
 	if (!strcmp(state.bgcolor, "black"))
 		printf("\e[40m");
-	if (!strcmp(state.bgcolor, "red"))
+	else if (!strcmp(state.bgcolor, "red"))
 		printf("\e[41m");
-	if (!strcmp(state.bgcolor, "green"))
+	else if (!strcmp(state.bgcolor, "green"))
 		printf("\e[42m");
-	if (!strcmp(state.bgcolor, "yellow"))
+	else if (!strcmp(state.bgcolor, "yellow"))
 		printf("\e[43m");
-	if (!strcmp(state.bgcolor, "blue"))
+	else if (!strcmp(state.bgcolor, "blue"))
 		printf("\e[44m");
-	if (!strcmp(state.bgcolor, "magenta"))
+	else if (!strcmp(state.bgcolor, "magenta"))
 		printf("\e[45m");
-	if (!strcmp(state.bgcolor, "cyan"))
+	else if (!strcmp(state.bgcolor, "cyan"))
 		printf("\e[46m");
-	if (!strcmp(state.bgcolor, "white"))
+	else if (!strcmp(state.bgcolor, "white"))
 		printf("\e[47m");
 
 	if (!strcmp(state.color, "black"))
 		printf("\e[30m");
-	if (!strcmp(state.color, "red"))
+	else if (!strcmp(state.color, "red"))
 		printf("\e[31m");
-	if (!strcmp(state.color, "green"))
+	else if (!strcmp(state.color, "green"))
 		printf("\e[32m");
-	if (!strcmp(state.color, "yellow"))
+	else if (!strcmp(state.color, "yellow"))
 		printf("\e[33m");
-	if (!strcmp(state.color, "blue"))
+	else if (!strcmp(state.color, "blue"))
 		printf("\e[34m");
-	if (!strcmp(state.color, "magenta"))
+	else if (!strcmp(state.color, "magenta"))
 		printf("\e[35m");
-	if (!strcmp(state.color, "cyan"))
+	else if (!strcmp(state.color, "cyan"))
 		printf("\e[36m");
-	if (!strcmp(state.color, "white"))
+	else if (!strcmp(state.color, "white"))
 		printf("\e[37m");
 
-	printf("%s", state.text);
-	printf("\e[0m\n");
+	printf("%s\e[0m\n", state.text);
+	fflush(stdout);
 }
 
 jQueryRet css(char* property, char* value) {
