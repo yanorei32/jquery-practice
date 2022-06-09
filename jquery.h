@@ -122,7 +122,7 @@ int col2seq(char *seq, char *col) {
 	return 0;
 }
 
-void appendTo(char* target) {
+void appendTo(char* _) {
 	char seq[32] = {0};
 
 	if (state.style.bold)
