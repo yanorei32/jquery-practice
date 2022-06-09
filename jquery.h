@@ -126,27 +126,27 @@ void appendTo(char* _) {
 	char seq[32] = {0};
 
 	if (state.style.bold)
-		printf("\e[1m");
+		printf("\033[1m");
 
 	if (state.style.italic)
-		printf("\e[3m");
+		printf("\033[3m");
 
 	if (state.style.underline)
-		printf("\e[4m");
+		printf("\033[4m");
 
 	if (!state.style.visibility)
-		printf("\e[8m");
+		printf("\033[8m");
 
 	if (state.style.strike)
-		printf("\e[9m");
+		printf("\033[9m");
 
 	if(!col2seq(seq, state.color))
-		printf("\e[3%sm", seq);
+		printf("\033[3%sm", seq);
 
 	if(!col2seq(seq, state.bgcolor))
-		printf("\e[4%sm", seq);
+		printf("\033[4%sm", seq);
 
-	printf("%s\e[0m%c", state.text, state.style.newline * '\n');
+	printf("%s\033[0m%c", state.text, state.style.newline * '\n');
 	fflush(stdout);
 }
 
@@ -179,7 +179,7 @@ jQueryRet css(char* property, char* value) {
 	return (jQueryRet) { appendTo, css };
 }
 
-jQueryRet $(char* tag, jQueryReq v) {
+jQueryRet jquery(char* tag, jQueryReq v) {
 	state = (jQueryState) { "", "", "", { 0, 0, 0, 0, 1, 1 } };
 
 	state.style.bold = !strcmp(tag, "<h1>");
